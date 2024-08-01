@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Samadhaan.com</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.7.1.min.js"
+      integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+      body {
+        font-family: "poppins", sans-serif;
+      }
+
+    </style>
+    <script>
+      var module = angular.module("myModule", []);
+      var controller = module.controller(
+        "myController",
+        function ($scope, $http) {
+          $scope.jsonRecordsAry = [];
+          $scope.UniqueCities = [];
+          $scope.UniqueSercat = [];
+
+          $scope.doFetchAll = function () {
+            let url = "/angular-fetch-allserviproviders";
+            $http.get(url).then(success, errors);
+            function success(response) {
+              $scope.jsonRecordsAry = response.data;
+            }
+            function errors(response) {
+              alert(response.data);
+            }
+          };
+          // --------------uniquecity--------------------------
+          $scope.uniquecity = function () {
+            let url = "/getuniquecity";
+            $http.get(url).then(success, errors);
+
+            function success(response) {
+              $scope.UniqueCities = response.data;
+            }
+
+            function errors(response) {
+              alert(response.data);
+            }
+          };
+
+
+          // //-----------------------------------------------------------------
+          $scope.uniquesercat = function (selectedCity) {
+            let url = "/getuniquesercat?location=" + selectedCity;
+            $http.get(url).then(success, errors);
+
+            function success(response) {
+              $scope.UniqueSercat = response.data;
+            }
+
+            function errors(response) {
+              alert(response.data);
+            }
+          };
+
+          $scope.searchh = function(){
+
+            let url = "/fetchcardbycityandsercat?city="+$scope.selectedCity+"&cat="+$scope.selectedsercat;
+
+            $http.get(url).then(succ,errr);
+
+            function succ(response){
+
+              
+              $scope.jsonRecordsAry = response.data;
+
+            }
+            function errr(response) {
+              alert(response.data);
+            }
+          };
+
+        
+          // //-----------------------------------------------------------------
+          $scope.showModal = function (selectedRecord) {
+            $scope.selectedRecord = selectedRecord;
+            $("#show").modal("show");
+          };
+        }
+      );
+    </script>
+  </head>
+  <body
+    ng-app="myModule"
+    ng-controller="myController"
+    ng-init="doFetchAll(); uniquecity();"
+  >
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <i class="fa-sharp fa-solid fa-house fa-beat"></i>
+      <a class="navbar-brand" href="#" style="padding-left: 20px;">   WebServe Connect</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="#">    Home</a>
+          </li>
+           </ul>
+  
+  
+  
+  
+  
+  
+  
+           
+  
+  
+             
+  
+  
+  
+  
+  
+  
+        
+      </div>
+    </div>
+  </nav>
+
+
+<!-- 
+    <div class="container mt-2 d-flex justify-content-end">
+      <div class="col-md-2" style="margin-right: 20px">
+        <select
+          class="form-select bg-light"
+          ng-model="selectedCity"
+          ng-change="uniquesercat(selectedCity)"
+          aria-label="Default select example"
+        >
+          <option selected disabled value="">📍Choose city...</option>
+          <option ng-repeat="obj in UniqueCities" value="{{obj.city}}">
+            {{obj.city}}
+          </option>
+        </select>
+      </div>
+      
+      <div class="col-md-3" style="margin-right: 15px">
+        <select
+          class="form-select bg-light"
+          ng-model="selectedsercat"
+       
+          aria-label="Default select example"
+        >
+          <option selected disabled value="">
+            Choose service category ...
+          </option>
+          <option ng-repeat="ary in UniqueSercat" value="{{ary.serviceCat}}">
+            {{ary.serviceCat}}
+          </option>
+        </select>
+      </div>
+      <div class="col-md-1">
+        <button type="button" ng-click="searchh()" class="btn btn-primary">
+          Search
+        </button>
+      </div>
+    </div> -->
+
+    <div class="container mt-2 mb-5">
+      <div class="row">
+        <div class="col-md-3 mt-3" ng-repeat="obj in jsonRecordsAry ">
+          <div
+            class="card mb-3"
+            style="
+              width: 300px;
+              height: 400px;
+              align-items: center;
+              border-style: none;
+            "
+          >
+          <img
+          ng-src="/uploads/{{obj.picname}}"
+          class="card-img-top rounded"
+          style="height: 222px; width: 192px"
+          ng-click="showModal(obj)"
+      />
+      
+            <div class="card-body">
+              <h5 class="card-title">{{obj.emalId }}</h5>
+              <p class="card-text">Name: {{obj.Name}}</p>
+              <p class="card-text">Service: {{obj.Category}}</p>
+              <!-- <button class="btn btn-primary" ng-click="showModal(obj)">
+                Show Full Details
+              </button> -->
+
+              <!--  -----------------------------------------------------------Modal-------------------------------------------------------... -->
+
+              <div
+                class="modal fade"
+                id="show"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">
+                        Full Details
+                      </h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      ></button>
+                    </div>
+                    <div class="modal-body">
+                      <p>Email: {{selectedRecord.emalId }}</p>
+                      <p>Name: {{selectedRecord.Name}}</p>
+                      <p>Service: {{selectedRecord.Category}}</p>
+                      <p>Since: {{selectedRecord.Since}}</p>
+                     
+                      <p>City: {{selectedRecord.City}}</p>
+                      <p>Gender: {{selectedRecord.Gender}}</p>
+                      <p>Contact: {{selectedRecord.contactNumber}}</p>
+                      <p>Firm: {{selectedRecord.Firm}}</p>
+                      <p>Firm Address: {{selectedRecord.Address}}</p>
+                      <p>Id: {{selectedRecord.picname}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ----------------------------------------------- -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- -------------------------------------------------------------------------------------- -->
+   

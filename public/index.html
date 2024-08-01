@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOME PAGE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <style>
+      body
+      {
+          background-color: bisque;
+      }
+      .ok{
+            color: green;
+        }
+        .not-ok{
+            color:red;
+        }
+      </style>
+
+
+<style>
+.card {
+  font-size: 1em;
+  overflow: hidden;
+  padding: 5;
+  border: none;
+  border-radius: .28571429rem;
+  box-shadow: 0 1px 3px 0 #d4d4d5, 0 0 0 1px #d4d4d5;
+  margin-top:20px;
+}
+</style>
+
+
+
+
+
+     
+      <script>
+        function showUsertype(refuser)
+        {
+            let Usertype=refuser.value;
+            let indx=refuser.selectedIndex;
+
+            alert(Usertype+"  "+indx)
+        }
+
+        $(document).ready(function()
+        {
+         // doSearch();// calling 
+  
+          $("#txtEmail").blur(function()
+          {
+              var emailKu= $(this).val();
+              var obj={
+                type:"get",
+                url:"/check-email",
+                data:{
+                  kuchEmail:emailKu
+                }
+              }
+  
+              $.ajax(obj).done(function(respKuch){
+                  //alert(respKuch);
+                  $("#res").html(respKuch);
+              }).fail(function(errKuch){
+                //alert(errKuch);
+                $("#res").html(respKuch);
+              })
+          });
+  
+            //===================================================
+          //--------------       Sign up         ----------------
+          //===================================================
+          $("#Submitdata").click(function() {
+    var AccEmail = $("#txtEmail").val();
+    var Password = $("#txtPwd").val();
+    var Mem_type = $("#utype").val();
+  
+    var obj_s = {
+      url: "/user-save",
+      type: "get",
+      data: {
+        x: AccEmail,   // Corrected key to 'email'
+        y: Password,
+        z: Mem_type
+      }
+    };
+  
+    $.ajax(obj_s)
+      .done(function(resp) {
+        $("#submit").html(resp);
+      })
+      .fail(function(err) {
+        alert(err);
+        $("#submit").html("ERROR AA GYI SORRY", err);
+      });
+  });
+  
+  
+  
+        });
+  
+      </script>
+      
+
+
+
+
+
+
+      <script>
+        $(document).ready(function () {
+          $("#TxtEmail").blur(function () {
+            let obj = {
+              url: "/checkk-login-email",
+              data: {
+                kuchhEmail: $("#TxtEmail").val(),
+
+              },
+            };
+  
+            $.ajax(obj)
+              .done(function (resp) {
+                $("#errlemail").html(resp);
+                if (resp === "Account does not exist.")
+                  $("#errlemail").removeClass("ok").addClass("not-ok");
+              })
+              .fail(function (err) {
+                alert("Error=" + err);
+              });
+          });
+  
+          // ------------------login button---------------------------------
+          $("#loginbtn").click(function () {
+            let email = $("#TxtEmail").val();
+  
+            let password = $("#TxtPwd").val();
+  
+            let obj = {
+              url: "/checkk-login-info",
+  
+              method: "POST",
+              
+  
+              data: { email: email, password: password },
+
+            };
+  
+            $.ajax(obj)
+  
+              .done(function (resp) {
+                if (resp == "Customer") {
+                  localStorage.setItem("activeUser", email);
+                  location.href = "customer-dash.html";
+                } else if (resp == "Service Provider") {
+                  localStorage.setItem("activePRO", email);
+                  location.href = "service-provider-dash.html";
+                } else alert(resp);
+              })
+  
+              .fail(function (err) {
+                alert("Error=" + err);
+
+
+              });
+          });
+        });
+      </script>
+
+    
+</head>
+<body>
+  <form action="/profile-save" method="post" enctype="multipart/form-data">
+    <div class="container" style="width: 1400px;"></div>
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <i class="fa-sharp fa-solid fa-house fa-beat"></i>
+    <a class="navbar-brand" href="#" style="padding-left: 20px;">   WebServe Connect</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">    Home</a>
+        </li>
+         </ul>
+
+
+
+
+
+
+
+         
+
+
+           
+
+
+
+
+
+
+      <form class="d-flex" role="search">
+        
+        
+        <button style="background-color:#FFE4C4; color: black;"  type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Signup</button>
+        
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">SIGN UP HERE</h1>
+                <span id="submit" style="color: green;"></span>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <form>
+                  <div class="mb-3">
+                    Email id  <br><input  type="text" name="txtEmail" id="txtEmail"  value="bcebti@gmail.com">
+                    
+                    
+                  </div>
+                  <div class="mb-3">
+                    Password <br> <input type="password" name="txtPwd" id="txtPwd" value="">
+                  </div>
+                  <div class="mb-3" >
+                    User Type <br>
+            <select  id="utype" onchange="showUsertype(this)">
+                <option value="None">Select</option>
+                <option value="Customer">Customer</option>
+                <option value="Service Provider">Service Provider</option>
+                 </select></div>
+                 
+                </form>
+              </div>
+              <div class="modal-footer">
+                
+                <button type="button" id="Submitdata" class="btn btn-primary" value="save in table" >Signup</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+
+       
+<button style="background-color: #FFE4C4; color:black;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal2"  data-bs-whatever="@getbootstrap">Login</button>
+
+<div class="modal fade" id="exampleModal2" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Login</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            Email id  <br><input  type="text" name="txtEmail" id="TxtEmail"  >
+            
+            
+            
+          </div>
+          <div class="mb-3">
+            Password <br> <input type="password" name="txtPwd" id="TxtPwd" value="">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+    
+        <button type="button" id="loginbtn" class="btn btn-primary">Login</button>
+      </div>
+    </div>
+  </div>
+</div>
+  </div>
+</div>
+ </form>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+<div id="carouselExampleIndicators" class="carousel slide">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active"  >
+      <img src="pics/house1.jpg" style="height: 500px;" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="pics/house2.jpg" style="height: 500px;" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="pics/house3.jpg"  style="height: 500px;" class="d-block w-100" alt="...">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+
+
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+  <div class="container-fluid">
+    <div class="d-flex justify-content-center w-100">
+      <a class="navbar-brand" href="#">Our Services</a>
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <!-- Add your nav items here if needed -->
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+
+
+
+
+
+
+
+
+<div>
+
+  <div class="d-flex justify-content-around">
+    <div class="card" style="width: 18rem;">
+      <img src="pics/pppp1.avif" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">What we do?</h5>
+        <p class="card-text">"Connecting You with Reliable Household Services"
+        </p>
+        <a href="#" class="btn btn-primary">More Info</a>
+      </div>
+    </div>
+
+    <div class="card" style="width: 18rem;">
+      <img src="pics/pppp2.avif" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title"> What you get here?</h5>
+        <p class="card-text">"Quality Service Providers at Your Fingertips"
+        </p>
+        <a href="#" class="btn btn-primary">More Info</a>
+      </div>
+    </div>
+
+    <div class="card" style="width: 18rem;">
+      <img src="pics/pppp3.avif" class="card-img-top" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">Terms & conditions</h5>
+        <p class="card-text">"By using our platform, you agree to our terms and conditions. "
+        </p>
+        <a href="#" class="btn btn-primary">More Info</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+<br><br><br>
+<div>
+  <div class="footer-clean" style="background-color: #d4d4d5;" >
+    <footer>
+      <br>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-3 item">
+            <h3>Services</h3>
+            <ul>
+              <li><a href="#">Maid Services</a></li>
+              <li><a href="#">Electrical Services</a></li>
+              <li><a href="#">Gardening services</a></li>
+            </ul>
+          </div>
+          <div class="col-md-3 item">
+            <h3>About Us</h3>
+            <ul>
+              <li>
+                <a href="#"
+                  >WebServeConnect.com - Your Solution Hub! Connecting you with
+                  skilled professionals for seamless projects, ensuring local
+                  expertise, a simplified experience, and trusted
+                  professionals. Join us where projects find solutions!</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-3 ml-2 mr-2 item">
+            <h3>Contact us</h3>
+            <ul>
+              <li><a href="#">Jaipur Rajasthan</a></li>
+              <li><a href="#">Email: agupta12_be22@thapar.edu</a></li>
+              <li><a href="#">Phone: +91 7849991289</a></li>
+            </ul>
+          </div>
+          <div class="col-lg-3 item">
+            <a href="#"
+              ><i class="icon ion-social-facebook"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30px"
+                  height="30px"
+                  viewBox="0 0 24 24"
+                >
+                  <g
+                    fill="none"
+                    stroke="black"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.85"
+                  >
+                    <path
+                      stroke-dasharray="66"
+                      stroke-dashoffset="66"
+                      d="M12 3H8C5.23858 3 3 5.23858 3 8V16C3 18.7614 5.23858 21 8 21H16C18.7614 21 21 18.7614 21 16V8C21 5.23858 18.7614 3 16 3z"
+                    >
+                      <animate
+                        fill="freeze"
+                        attributeName="stroke-dashoffset"
+                        dur="1.8s"
+                        values="66;132"
+                      />
+                    </path>
+                    <path
+                      stroke-dasharray="26"
+                      stroke-dashoffset="26"
+                      d="M12 8C14.20914 8 16 9.79086 16 12C16 14.20914 14.20914 16 12 16C9.79086 16 8 14.2091 8 12C8 9.79086 9.79086 8 12 8"
+                    >
+                      <animate
+                        fill="freeze"
+                        attributeName="stroke-dashoffset"
+                        begin="2.1s"
+                        dur="1.2s"
+                        values="26;0"
+                      />
+                    </path>
+                  </g>
+                  <circle
+                    cx="17"
+                    cy="7"
+                    r="1.5"
+                    fill="black"
+                    fill-opacity="0"
+                  >
+                    <animate
+                      fill="freeze"
+                      attributeName="fill-opacity"
+                      begin="3.3s"
+                      dur="1.2s"
+                      values="0;1"
+                    />
+                  </circle></svg></i
+            ></a>
+
+            <a href="#"
+              ><i
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30px"
+                  height="30px"
+                  viewBox="0 0 24 24"
+                >
+                  <mask
+                    id="lineMdGithubLoop0"
+                    width="24"
+                    height="24"
+                    x="0"
+                    y="0"
+                  >
+                    <g fill="#fff">
+                      <ellipse cx="9.5" cy="9" rx="1.5" ry="1" />
+                      <ellipse cx="14.5" cy="9" rx="1.5" ry="1" />
+                    </g>
+                  </mask>
+                  <g
+                    fill="none"
+                    stroke="black"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="1.85"
+                  >
+                    <path
+                      stroke-dasharray="30"
+                      stroke-dashoffset="30"
+                      d="M12 4C13.6683 4 14.6122 4.39991 15 4.5C15.5255 4.07463 16.9375 3 18.5 3C18.8438 4 18.7863 5.21921 18.5 6C19.25 7 19.5 8 19.5 9.5C19.5 11.6875 19.017 13.0822 18 14C16.983 14.9178 15.8887 15.3749 14.5 15.5C15.1506 16.038 15 17.3743 15 18C15 18.7256 15 21 15 21M12 4C10.3317 4 9.38784 4.39991 9 4.5C8.47455 4.07463 7.0625 3 5.5 3C5.15625 4 5.21371 5.21921 5.5 6C4.75 7 4.5 8 4.5 9.5C4.5 11.6875 4.98301 13.0822 6 14C7.01699 14.9178 8.1113 15.3749 9.5 15.5C8.84944 16.038 9 17.3743 9 18C9 18.7256 9 21 9 21"
+                    >
+                      <animate
+                        fill="freeze"
+                        attributeName="stroke-dashoffset"
+                        dur="1.8s"
+                        values="30;0"
+                      />
+                    </path>
+                    <path
+                      stroke-dasharray="10"
+                      stroke-dashoffset="10"
+                      d="M9 19"
+                    >
+                      <animate
+                        fill="freeze"
+                        attributeName="stroke-dashoffset"
+                        begin="2.1s"
+                        dur="0.6s"
+                        values="10;0"
+                      />
+                      <animate
+                        attributeName="d"
+                        dur="9s"
+                        repeatCount="indefinite"
+                        values="M9 19c-1.406 0-2.844-.563-3.688-1.188C4.47 17.188 4.22 16.157 3 15.5;M9 19c-1.406 0-3-.5-4-.5-.532 0-1 0-2-.5;M9 19c-1.406 0-2.844-.563-3.688-1.188C4.47 17.188 4.22 16.157 3 15.5"
+                      />
+                    </path>
+                  </g>
+                  <rect
+                    width="8"
+                    height="4"
+                    x="8"
+                    y="11"
+                    fill="black"
+                    mask="url(#lineMdGithubLoop0)"
+                  >
+                    <animate
+                      attributeName="y"
+                      dur="30s"
+                      keyTimes="0;0.45;0.46;0.54;0.55;1"
+                      repeatCount="indefinite"
+                      values="11;11;7;7;11;11"
+                    />
+                  </rect></svg></i
+            ></a>
+            <a href="#"
+              ><i class="icon"
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30px"
+                  height="30px"
+                  viewBox="0 0 24 24"
+                >
+                  <g fill="black">
+                    <path d="M1 2h2.5L3.5 2h-2.5z">
+                      <animate
+                        fill="freeze"
+                        attributeName="d"
+                        dur="1.2s"
+                        values="M1 2h2.5L3.5 2h-2.5z;M1 2h2.5L18.5 22h-2.5z"
+                      />
+                    </path>
+                    <path d="M5.5 2h2.5L7.2 2h-2.5z">
+                      <animate
+                        fill="freeze"
+                        attributeName="d"
+                        dur="1.2s"
+                        values="M5.5 2h2.5L7.2 2h-2.5z;M5.5 2h2.5L23 22h-2.5z"
+                      />
+                    </path>
+                    <path d="M3 2h5v0h-5z" opacity="0">
+                      <set attributeName="opacity" begin="1.2s" to="1" />
+                      <animate
+                        fill="freeze"
+                        attributeName="d"
+                        begin="1.2s"
+                        dur="1.2s"
+                        values="M3 2h5v0h-5z;M3 2h5v2h-5z"
+                      />
+                    </path>
+                    <path d="M16 22h5v0h-5z" opacity="0">
+                      <set attributeName="opacity" begin="1.2s" to="1" />
+                      <animate
+                        fill="freeze"
+                        attributeName="d"
+                        begin="1.2s"
+                        dur="1.2s"
+                        values="M16 22h5v0h-5z;M16 22h5v-2h-5z"
+                      />
+                    </path>
+                    <path d="M18.5 2h3.5L22 2h-3.5z" opacity="0">
+                      <set attributeName="opacity" begin="1.5s" to="1" />
+                      <animate
+                        fill="freeze"
+                        attributeName="d"
+                        begin="1.5s"
+                        dur="1.2s"
+                        values="M18.5 2h3.5L22 2h-3.5z;M18.5 2h3.5L5 22h-3.5z"
+                      />
+                    </path>
+                  </g></svg></i
+            ></a>
+            <a href="#"><i class="icon ion-social-instagram"></i></a>
+            <p class="copyright">WebServeConnect.com © 2024</p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    </div>
+</div>
+
+
+
+
+
+
+  
+
+
+</form>
+</body>
+</html>

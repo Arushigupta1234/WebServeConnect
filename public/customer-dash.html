@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Bootstrap demo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+       $(document).ready(function()
+        {
+          $("#submitDataa").click(function() {
+    var emaill = $("#inputMail").val();
+    var categoryy = $("#inputTask").val();
+    var addresss = $("#inputAddress").val();
+    var cityy = $("#inputCity").val();
+    var uptoo = $("#inputupto").val();
+   var work = $("#inputwork").val();
+
+  
+    var obj_s = {
+      url: "/postJob-save",
+      type: "get",
+      data: {
+        x: emaill ,   // Corrected key to 'email'
+        y: categoryy,
+        z: addresss,
+        a:cityy,
+        b:uptoo,
+        c:work
+
+      }
+    };
+  
+    $.ajax(obj_s)
+      .done(function(resp) {
+        $("#submit").html(resp);
+      })
+      .fail(function(err) {
+        alert(err);
+        $("#submit").html("ERROR AA GYI SORRY", err);
+      });
+  });
+
+         });
+
+
+         $(document).ready(function() {
+    $('#changePwd').on('click', function() {
+      var email = $('#email').val();
+      var oldPwd = $('#oldPwd').val();
+      var newPwd = $('#newPwd').val();
+
+      // Perform AJAX request to change the password
+      $.ajax({
+        url: '/changePwd',
+        method: 'GET',
+        data: {
+          email: email,
+          opwd: oldPwd,
+          npwd: newPwd
+        },
+        success: function(response) {
+          $('#alert').text('Password Updated'); // Update alert message
+        },
+        error: function(err) {
+          $('#alert').text(err); // Display error message
+        }
+      });
+    });
+  });
+    </script>
+
+
+
+
+
+
+<script>
+  $(document).ready(function () {
+    $("#ol").click(function () {
+      if ($(this).val() === "otherLocation") {
+        $("#inputAddress").prop("disabled", false);
+        $("#inputCity").prop("disabled", false);
+        
+        $("#inputAddress").val("");
+        $("#inputCity").val("");
+        
+      }
+    });
+
+    $("#home").click(function () {
+      if ($(this).val() === "home") {
+        $("#inputAddress").prop("disabled", true);
+        $("#inputCity").prop("disabled", true);
+        
+
+        let obj = {
+          url: "/fetchAdd",
+          data: {
+            email: $("#inputMail").val(),
+          },
+        };
+
+        $.ajax(obj)
+          .done(function (ary) {
+            $("#inputAddress").val(ary[0].address);
+            $("#inputCity").val(ary[0].city);
+            
+          })
+          .fail(function (err) {
+            alert("Error=" + err);
+          });
+      }
+    });
+
+  });
+</script>
+
+  <script>
+      function fetchUser() {
+        let activeUser = localStorage.getItem("activeUser");
+        document.querySelector("#auser").innerHTML = activeUser;
+        document.querySelector("#txttEmail").value = activeUser;
+        document.querySelector("#EMail").value = activeUser;
+      }
+    </script>
+
+
+
+  </head>
+  <body onload="fetchUser()">
+
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <i class="fa-sharp fa-solid fa-house fa-beat"></i>
+        <a class="navbar-brand" href="#" style="padding-left: 20px;">   WebServe Connect</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">    Home</a>
+            </li>
+             </ul>
+    
+    
+    
+    
+    
+    
+    
+             
+    
+    
+               
+    
+    
+    
+    
+    
+    
+         
+    
+    
+           
+   
+    
+    
+      </div>
+    </div>
+     </form>
+        </div>
+      </div>
+    </nav>
+   <br>
+   <br>
+   <br>
+   <span id="auser" style=" font-size: large;">
+   </span>
+   <br>
+
+    <div style="display: flex; justify-content: space-evenly; flex-wrap: wrap;">
+    <div class="card" style="width: 18rem;">
+        <img src="pics/3d-icon-social-media-app_23-2150049569.avif" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Profile</h5>
+          <br>
+
+          
+          <a href="/public/profile-customer.html" class="btn btn-primary">Click Here</a>
+        </div>
+      </div>
+
+
+
+      <div class="card" style="width: 18rem;">
+        <img src="pics/man-having-online-job-interview_52683-43379.avif" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Post Jobs</h5>
+          <br>
+          
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Click Here
+          </button>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h1 class="modal-title fs-5" id="staticBackdropLabel">Post Job</h1>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+
+                  <form class="row g-3" action="/postJob-save" method="get">
+                    <div class="col-md-8">
+                      <label for="inputEmail4" class="form-label">Email</label>
+                      <input type="email" class="form-control" id="inputMail" name="eemail">
+                    </div>
+
+
+                    <div class="col-md-6">
+                      <label for="inputTask" class="form-label">Task Category</label>
+                      <select id="inputTask" class="form-select" name="ttask">
+                        <option selected>Choose...</option>
+                        <option>Home Cleaning</option>
+                        <option>AC & Appliance Repair</option>
+                        <option>Electrician</option>
+                        <option>Plumber</option>
+                        <option>Carpenter</option>
+                        <option>Cleaning & Pest Control</option>
+                        <option>Painting & Waterproofing</option>
+                      </select>
+                    </div>
+
+                  
+                  
+                
+                     
+                      <div class="col-12"> 
+                      <div class="form-check" >
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="home" value="home">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                          Home
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="ol" value="otherLocation" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          Other Location
+                        </label>
+                      </div>
+                    </div>  
+
+
+
+
+
+
+
+                    
+                    <div class="col-12">
+                      <label for="inputAddress" class="form-label">Address</label>
+                      <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="aaddress">
+                    </div>
+
+
+                   
+                    <div class="col-md-6">
+                      <label for="inputCity" class="form-label">City</label>
+                      <input type="text" class="form-control" id="inputCity" name="ccity">
+                    </div>
+
+                    <div class="col-12">
+                      <label for="inputCity" class="form-label">Up To</label>
+                      <input type="date" class="form-control" id="inputupto" name="uupto" >
+                    </div>
+
+                    <div class="col-12">
+                      <label for="inputCity" class="form-label">Work to be done</label>
+                      <input type="text" class="form-control" id="inputwork" name="wwork">
+                    </div>
+                   
+                   
+                    <div class="col-12">
+                      <button type="button" class="btn btn-primary" id="submitDataa">Submit</button>
+                      <span id="submit">*</span>
+                    </div>
+                  </form>
+                </div>
+               
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!------------------------>
+
+
+      <div class="card" style="width: 18rem;">
+        <img src="pics/choice-worker-concept_23-2148642741.avif" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Jobs Manager</h5>
+          <br>
+          <a href="/jm" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+
+
+
+
+      <div class="card" style="width: 18rem;">
+        <img src="pics/search-concept-landing-page_23-2148211329.avif" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Search Service Providers</h5>
+          <br>
+
+          <a href="/ssp" class="btn btn-primary">Go somewhere</a>
+        </div>
+      </div>
+
+      <div class="card" style="width: 18rem;">
+        <img src="pics/ecology-protection-environment-preservation-nature-conservation-eco-friendly-mechanism-idea-cogwheels-leaves-mechanical-parts-with-foliage_335657-1588.avif" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title">Settings</h5>
+         <br>
+          <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+  Click Here
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Change Password</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" aria-describedby="emailHelp" name="emadd">
+            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"> Old Password</label>
+            <input type="password" class="form-control" id="oldPwd" name="oldpwd">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label"> New Password</label>
+            <input type="password" class="form-control" id="newPwd" name="newPwd">
+          </div>
+         
+          <button type="button" class="btn btn-primary" id="changePwd">Change Password</button>
+          <span id="alert">*</span>
+        </form>
+      </div>
+     
+    </div>
+  </div>
+</div>
+
+        </div>
+      </div>
+
+ </div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  </body>
+</html>

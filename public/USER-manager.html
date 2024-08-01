@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>USERS-MANAGER</title>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <style>
+      th {
+        font-weight: 400;
+      }
+    </style>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap");
+
+      body {
+        font-family: "poppins", sans-serif;
+      }
+
+      
+
+      .footer-clean {
+        padding: 50px 0;
+        background-color: #eff2f7;
+        color: #4b4c4d;
+      }
+
+      .footer-clean h3 {
+        margin-top: 0;
+        margin-bottom: 12px;
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      .footer-clean ul {
+        padding: 0;
+        list-style: none;
+        line-height: 1.6;
+        font-size: 14px;
+        margin-bottom: 0;
+      }
+
+      .footer-clean ul a {
+        color: inherit;
+        text-decoration: none;
+        opacity: 0.8;
+      }
+
+      .footer-clean ul a:hover {
+        opacity: 1;
+      }
+
+      .footer-clean .item.social {
+        text-align: right;
+      }
+
+      .footer-clean .item.social > a {
+        font-size: 24px;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        display: inline-block;
+        text-align: center;
+        border-radius: 50%;
+        border: 1px solid #ccc;
+        margin-left: 10px;
+        margin-top: 22px;
+        color: inherit;
+        opacity: 0.75;
+      }
+
+      .footer-clean .item.social > a:hover {
+        opacity: 0.9;
+      }
+
+      .footer-clean .copyright {
+        margin-top: 14px;
+        margin-bottom: 0;
+        font-size: 13px;
+        opacity: 0.6;
+      }
+    </style>
+    <style>
+
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.3/angular.min.js"></script>
+    <script>
+      var module = angular.module("myModule", []);
+      var controller = module.controller(
+        "myController",
+        function ($scope, $http) {
+          $scope.jsonRecordsAry = [];
+          //   ----------Fetch-all-------------------------------
+          $scope.doFetchAll = function () {
+            let url = "/angular-fetch-all";
+            $http.get(url).then(success, errors);
+            function success(response) {
+              $scope.jsonRecordsAry = response.data;
+            }
+            function errors(response) {
+              alert(response.data);
+            }
+          };
+          //   ----------Block-------------------------------
+          $scope.doBlock = function (selecEmail) {
+            //let url="/angular-delete?emailkuch="+selemailid+"&pwd="+selemailid;
+            //    let url="/angular-delete?emailkuch="+selemailid;
+
+            let url = "/block?email="+selecEmail;
+            $http.get(url).then(success, errors);
+            function success(response) {
+            //   alert(response.data);
+              window.location.reload();   //google 
+            }
+            function errors(response) {
+              alert(response.data);
+            }
+          };
+          //   ----------RESUME-------------------------------
+          $scope.doResume = function (selecEmail) {
+           
+
+            let url = "/resume?email="+selecEmail;
+            $http.get(url).then(success, errors);
+            function success(response) {
+            //   alert(response.data);
+              window.location.reload();  
+            }
+            function errors(response) {
+              alert(response.data);
+            }
+          };
+
+
+        }
+      );
+    </script>
+  </head>
+  <body ng-app="myModule" ng-controller="myController" ng-init="doFetchAll();" >
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <i class="fa-sharp fa-solid fa-house fa-beat"></i>
+        <a class="navbar-brand" href="#" style="padding-left: 20px;">   WebServe Connect</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">    Home</a>
+            </li>
+             </ul>
+    
+    
+    
+    
+    
+    
+    
+             
+    
+    
+               
+    
+    
+    
+    
+    
+    
+          
+        </div>
+      </div>
+    </nav>
+    <div
+      class="container d-flex  flex-column "
+      style="width: 1200px; margin-top: 30px;"
+    >
+      
+
+      <div class="row" style="width: 100%; justify-content: center">
+        <div class="col-md-10">
+          <table class="table table-striped" style="border-radius: 10px; overflow: hidden;">
+            <tr>
+              <th>Email Id</th>
+              <th>Password</th>
+              <th>User Type</th>
+              <th>Created</th>
+              <th>Status</th>
+              <th>Operations</th>
+            </tr>
+            <tr ng-repeat="obj in jsonRecordsAry">
+              <td>{{obj.email_id}}</td>
+              <td>{{obj.password}}</td>
+              <td>{{obj.utype}}</td>
+              <td>{{obj.dos}}</td>
+              <td style="justify-content: center;">{{obj.status}}</td>
+              <th>
+                <a
+                  class="btn btn-danger btn-sm mt-1"
+                  ng-click="doBlock(obj.email_id);"
+                 
+                  >Block
+                </a>
+                <a
+                  class="btn btn-primary btn-sm mt-1"
+                  ng-click="doResume(obj.email_id);"
+                  >Resume</a
+                >
+              </th>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+    <!-- ------------------------------------------------------------------ -->
+  
+  </body>
+</html>
